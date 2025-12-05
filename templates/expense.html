@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md p-8">
+        <h2 class="text-2xl font-bold mb-6">Neue Ausgabe</h2>
+        
+        <form method="POST" class="space-y-6">
+            <!-- Name -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                <input type="text" name="name" placeholder="Restaurant Trianon" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+
+            <!-- Datum et Betrag -->
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Datum</label>
+                    <input type="date" name="date" value="2025-01-30"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Betrag</label>
+                    <input type="number" name="amount" placeholder="€0.00" step="0.01"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+            </div>
+
+            <!-- Kategorie -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Kategorie</label>
+                <select name="category" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="">Kategorie auswählen...</option>
+                    <option value="lebensmittel">Lebensmittel</option>
+                    <option value="transport">Transport</option>
+                    <option value="unterhaltung">Unterhaltung</option>
+                    <option value="kleidung">Kleidung</option>
+                    <option value="gesundheit">Gesundheit</option>
+                    <option value="sonstiges">Sonstiges</option>
+                </select>
+            </div>
+
+            <!-- Beschreibung -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Beschreibung</label>
+                <textarea name="description" rows="3" placeholder="Beschreibung der Ausgabe"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+            </div>
+
+            <!-- Wiederkehrende Ausgaben -->
+            <div class="border-t pt-6">
+                <h3 class="text-lg font-semibold mb-4">Gespeicherte Ausgaben</h3>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <span class="font-medium">Ausgabe 1</span>
+                        <span class="text-gray-600">noch nicht gesetzt</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <span class="font-medium">Ausgabe 2</span>
+                        <span class="text-gray-600">noch nicht gesetzt</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <span class="font-medium">Ausgabe 3</span>
+                        <span class="text-gray-600">noch nicht gesetzt</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex justify-end space-x-4 pt-6">
+                <button type="button" 
+                    class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                    Zurückkehren
+                </button>
+                <button type="submit" 
+                    class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    Ausgabe speichern
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
