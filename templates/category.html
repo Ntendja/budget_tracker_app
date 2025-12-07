@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+ <!-- Add form - Always visible -->
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50">
+                    <h3 class="text-lg font-semibold mb-4">Kategorie verwalten</h3>
+                    
+                    <div class="space-y-4">
+                        <!-- Name -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Name:
+                            </label>
+                            <input type="text" 
+                                id="newCategoryName"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="z.B. Lebensmittel">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Color -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Farbe:
+                                </label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="color" 
+                                        id="newCategoryColor"
+                                        value="#3B82F6"
+                                        class="h-10 w-16 border border-gray-300 rounded cursor-pointer">
+                                    <input type="text" 
+                                        id="colorHex"
+                                        value="#3B82F6"
+                                        readonly
+                                        class="flex-1 px-3 py-2 border border-gray-300 rounded-lg bg-white text-sm">
+                                </div>
+                                
+                                <!-- Predefined colours -->
+                                <div class="flex space-x-1 mt-2">
+                                    <button type="button" onclick="selectColor('#EF4444')" 
+                                        class="w-8 h-8 rounded bg-red-500 hover:ring-2 ring-offset-1 ring-red-500 transition">
+                                    </button>
+                                    <button type="button" onclick="selectColor('#3B82F6')" 
+                                        class="w-8 h-8 rounded bg-blue-500 hover:ring-2 ring-offset-1 ring-blue-500 transition">
+                                    </button>
+                                    <button type="button" onclick="selectColor('#10B981')" 
+                                        class="w-8 h-8 rounded bg-green-500 hover:ring-2 ring-offset-1 ring-green-500 transition">
+                                    </button>
+                                    <button type="button" onclick="selectColor('#F59E0B')" 
+                                        class="w-8 h-8 rounded bg-amber-500 hover:ring-2 ring-offset-1 ring-amber-500 transition">
+                                    </button>
+                                    <button type="button" onclick="selectColor('#8B5CF6')" 
+                                        class="w-8 h-8 rounded bg-purple-500 hover:ring-2 ring-offset-1 ring-purple-500 transition">
+                                    </button>
+                                    <button type="button" onclick="selectColor('#EC4899')" 
+                                        class="w-8 h-8 rounded bg-pink-500 hover:ring-2 ring-offset-1 ring-pink-500 transition">
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Limit -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Limite festlegen:
+                                </label>
+                                <div class="relative">
+                                    <input type="number" 
+                                        id="newCategoryLimit"
+                                        min="0"
+                                        step="0.01"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-8"
+                                        placeholder="Max: 0,00€">
+                                    <span class="absolute right-3 top-2.5 text-gray-500">€</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="flex justify-end space-x-3 pt-2">
+                            <button type="button" 
+                                onclick="resetCategoryForm()"
+                                class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-white transition">
+                                Zurücksetzen
+                            </button>
+                            <button type="submit" 
+                                onclick="saveNewCategory()"
+                                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                                Speichern
+                            </button>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}
