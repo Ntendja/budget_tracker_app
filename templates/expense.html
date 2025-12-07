@@ -49,25 +49,6 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
             </div>
 
-            <!-- Wiederkehrende Ausgaben -->
-            <div class="border-t pt-6">
-                <h3 class="text-lg font-semibold mb-4">Gespeicherte Ausgaben</h3>
-                
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                        <span class="font-medium">Ausgabe 1</span>
-                        <span class="text-gray-600">noch nicht gesetzt</span>
-                    </div>
-                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                        <span class="font-medium">Ausgabe 2</span>
-                        <span class="text-gray-600">noch nicht gesetzt</span>
-                    </div>
-                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                        <span class="font-medium">Ausgabe 3</span>
-                        <span class="text-gray-600">noch nicht gesetzt</span>
-                    </div>
-                </div>
-            </div>
 
             <!-- Buttons -->
             <div class="flex justify-end space-x-4 pt-6">
@@ -80,6 +61,27 @@
                     Ausgabe speichern
                 </button>
             </div>
+
+
+            <!-- Gespeicherte Ausgaben -->
+            <div class="border-t pt-6">
+                <h3 class="text-lg font-semibold mb-4">Gespeicherte Ausgaben</h3>
+                
+                <div class="space-y-4">
+                    {% if expenses %}
+                        {% for expense in expenses %}
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                <span class="font-medium">{{expense['name']}}</span>
+                                <span class="text-gray-600">€{{expense['amount']}} / {{expense['date']}}</span>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-gray-600">Keine gespeicherten Ausgaben.</p>
+                    {% endif %}   
+                </div>
+            </div>
+
+            
         </form>
     </div>
 </div>

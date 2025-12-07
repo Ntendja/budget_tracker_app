@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from src.dashboard import DashboardController 
 from src.reports import ReportsController
 app = Flask(__name__)
+expenses = []
 
 @app.route('/')
 def home():
@@ -11,7 +12,23 @@ def home():
 
 @app.route('/expense', methods=['GET', 'POST'])
 def expense():
-    return render_template('expense.html')
+    if request.method == 'POST':
+       name = request.form.get("name")
+       date = request.form.get("date")
+       amount = request.form.get("amount")
+       category = request.form.get("category")
+       description = request.form.get("description")
+
+       new_expense = {
+           'name': name,
+           'date': date,
+           'amount': amount,
+           'category': category,
+           'description': description
+       }
+
+       expenses.append(new_expense)
+    return render_template('expense.html', expenses=expenses)
 
 @app.route('/reports')
 def reports():
