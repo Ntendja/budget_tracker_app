@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from src.dashboard import DashboardController 
-
+from src.reports import ReportsController
 app = Flask(__name__)
 
 @app.route('/')
@@ -15,7 +15,9 @@ def expense():
 
 @app.route('/reports')
 def reports():
-    return render_template('reports.html')
+    report_data = ReportsController()
+    card_data = report_data.displaySummaryCards()
+    return render_template('reports.html', data=card_data)
 
 @app.route('/settings')
 def settings():

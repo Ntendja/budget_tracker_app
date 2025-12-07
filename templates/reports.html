@@ -7,18 +7,14 @@
         
         <!-- Summary cards -->
         <div class="grid grid-cols-3 gap-4 mb-8">
-            <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-lg">
-                <h3 class="text-sm opacity-90 mb-2">Monatliche Ausgaben</h3>
-                <p class="text-3xl font-bold">€225 €</p>
-            </div>
-            <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-lg">
-                <h3 class="text-sm opacity-90 mb-2">Gesamt-Fonds</h3>
-                <p class="text-3xl font-bold">€50 €</p>
-            </div>
-            <div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-lg">
-                <h3 class="text-sm opacity-90 mb-2">Durchschnitt</h3>
-                <p class="text-3xl font-bold">€75 €</p>
-            </div>
+
+            {% for value in data.displayCards %}
+                <div class="{{value.backgroundColor}}  bg-gradient-to-br text-white p-6 rounded-lg">
+                    <h3 class="text-sm opacity-90 mb-2">{{value.name}}</h3>
+                    <p class="text-3xl font-bold">€{{value.amount}}</p>
+                </div>
+            {% endfor %}
+            
         </div>
 
         <!-- Graphics section -->
@@ -38,12 +34,11 @@
 
         <!-- Buttons -->
         <div class="flex justify-center space-x-4 mt-8">
-            <button class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
-                Export
-            </button>
-            <button class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                Analyse
-            </button>
+            {% for value in data.displayButton %}
+                <button class="{{value.color}}  px-6 py-2 border  rounded-lg">
+                {{value.name}}
+                </button>
+            {% endfor %}     
         </div>
     </div>
 </div>
