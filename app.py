@@ -11,11 +11,12 @@ category_controller = CategoryController()
 @app.route('/')
 def home():
     dashboard_data = DashboardController()
-    dummy_data = dashboard_data.dummyData(budget)
+    dummy_data = dashboard_data.dummyData(budget, expenses)
     return render_template('dashboard.html', data=dummy_data)
 
 @app.route('/expense', methods=['GET', 'POST'])
 def expense():
+    global expenses
     categories = category_controller.getCategories()
     if request.method == 'POST':
        name = request.form.get("name")
@@ -33,6 +34,7 @@ def expense():
        }
 
        expenses.append(new_expense)
+       print("Expenses:", expenses)
     return render_template('expense.html', expenses=expenses, data=categories)
 
 @app.route('/reports')
