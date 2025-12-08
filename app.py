@@ -16,6 +16,7 @@ def home():
 
 @app.route('/expense', methods=['GET', 'POST'])
 def expense():
+    categories = category_controller.getCategories()
     if request.method == 'POST':
        name = request.form.get("name")
        date = request.form.get("date")
@@ -32,7 +33,7 @@ def expense():
        }
 
        expenses.append(new_expense)
-    return render_template('expense.html', expenses=expenses)
+    return render_template('expense.html', expenses=expenses, data=categories)
 
 @app.route('/reports')
 def reports():
