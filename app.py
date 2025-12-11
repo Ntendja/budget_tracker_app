@@ -2,7 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for
 from src.dashboard import DashboardController 
 from src.reports import ReportsController
 from src.categoryController import CategoryController
+from src.expenseController import ExpenseController
 category_controller = CategoryController()
+expense_controller = ExpenseController()
 
 app = Flask(__name__)
 expenses = []
@@ -15,10 +17,19 @@ def home():
     dummy_data = dashboard_data.dummyData(budget, expenses)
     return render_template('dashboard.html', data=dummy_data)
 
-@app.route('/expense', methods=['GET', 'POST'])
-def expense():
-    global expenses
-    categories = category_controller.getCategories()
+
+@app.route('/expense', methods=['GET'])
+def viewExpense():
+    expenses = expense_controller.getExpenses()
+
+    categories = category_controller.getCategories()   
+    return render_template('expense.html', expenses=expenses, data=categories)
+
+
+@app.route('/expense', methods=['POST'])
+def createExpense():
+    
+    
     if request.method == 'POST':
        name = request.form.get("name")
        date = request.form.get("date")
@@ -26,17 +37,35 @@ def expense():
        category = request.form.get("category")
        description = request.form.get("description")
 
-       new_expense = {
-           'name': name,
-           'date': date,
-           'amount': amount,
-           'category': category,
-           'description': description
-       }
-
-       expenses.append(new_expense)
-       print("Expenses:", expenses)
+       
+    expense_controller.addExpenses(name, date, amount, category, description)
+    expenses = expense_controller.getExpenses()
+    categories = category_controller.getCategories()   
     return render_template('expense.html', expenses=expenses, data=categories)
+
+@app.route('/expense/<id>/delete', methods=['GET'])
+def deleteExpense(id):
+    expense_controller.deleteExpense(id)
+    return redirect(url_for('viewExpense'))
+
+@app.route('/expense/<id>/edit', methods=['GET'])
+def editExpense(id):
+    edit_expense = expense_controller.getExpense(id)
+    categories = category_controller.getCategories()   
+    return render_template('edit_expense.html', expense=edit_expense, data=categories)
+
+@app.route('/expense/<id>/edit', methods=['POST'])
+def updateExpense(id):
+
+    if request.method == 'POST':
+       name = request.form.get("name")
+       date = request.form.get("date")
+       amount = request.form.get("amount")
+       category = request.form.get("category")
+       description = request.form.get("description")
+
+    expense_controller.updateExpense(id, name, date, amount, category, description)
+    return redirect(url_for('viewExpense'))
 
 @app.route('/reports')
 def reports():
