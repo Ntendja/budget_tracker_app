@@ -1,21 +1,24 @@
 from flask import Flask, render_template, request, redirect, url_for
-from src.dashboard import DashboardController 
-from src.reports import ReportsController
+from src.dashboardController import DashboardController 
 from src.categoryController import CategoryController
 from src.expenseController import ExpenseController
+from src.budgetController import BudgetController
+
 category_controller = CategoryController()
 expense_controller = ExpenseController()
-
+dashboard_controller = DashboardController()
+budget_controller = BudgetController()
 app = Flask(__name__)
-expenses = []
-budget = 0
-
 
 @app.route('/')
 def home():
-    dashboard_data = DashboardController()
-    dummy_data = dashboard_data.dummyData(budget, expenses)
-    return render_template('dashboard.html', data=dummy_data)
+    budget = budget_controller.getBudget()
+    expenses = expense_controller.getExpenses()
+    total_expenses = dashboard_controller.getTotalExpenses()
+    remaining_budget = budget.get_amount() - total_expenses
+    expenses_by_category = expense_controller.getExpenseByCategory()
+    result = [dict(row) for row in expenses_by_category]
+    return render_template('dashboard.html', budget = budget, expenses = expenses, total_expenses = total_expenses, remaining_budget = remaining_budget, expenses_by_category= result )
 
 
 @app.route('/expense', methods=['GET'])
@@ -28,8 +31,6 @@ def viewExpense():
 
 @app.route('/expense', methods=['POST'])
 def createExpense():
-    
-    
     if request.method == 'POST':
        name = request.form.get("name")
        date = request.form.get("date")
@@ -67,24 +68,15 @@ def updateExpense(id):
     expense_controller.updateExpense(id, name, date, amount, category, description)
     return redirect(url_for('viewExpense'))
 
-@app.route('/reports')
-def reports():
-    report_data = ReportsController()
-    card_data = report_data.displaySummaryCards()
-    return render_template('reports.html', data=card_data)
-
-
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
-    global budget
-    
-
     if request.method == 'POST':
         monthly_budget = request.form.get('monthly_budget')
         if monthly_budget:
             budget = float(monthly_budget)
-
+            budget_controller.createOrUpdateBudget(budget)
+    budget = budget_controller.getBudget()
     categories = category_controller.getCategories()        
     return render_template('settings.html', budget=budget, data=categories)
 

@@ -17,11 +17,16 @@ class ExpenseController:
         rows = self.db.fetchall(query)
         expenses = []
         for row in rows:
-            
             expense = Expense(row["id"], row["name"], row["date"], row["amount"], row["category"], row["description"])
             logging.warning(expense.get_name())
             expenses.append(expense)
         return expenses
+
+    def getExpenseByCategory(self):
+        query = "SELECT category, sum(amount) as amount,  color FROM expenses join categories on categories.name == category group by category"
+        rows = self.db.fetchall(query)
+        return rows
+
 
     def getExpense(self, id):
        query = "SELECT * FROM expenses WHERE id = ?"
