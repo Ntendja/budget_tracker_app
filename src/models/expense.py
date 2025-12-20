@@ -1,5 +1,9 @@
 class Expense:
+    """ Uses encapsulation (private attributes) to protect data integrit """
+
     def __init__(self, id, name, date, amount, category, description):
+        """ Initializes an Expense instance """
+        
         self.id = id
         self.__name = name
         self.__amount = amount

@@ -1,7 +1,17 @@
 import sqlite3
 from threading import RLock  
 
+"""
+Singleton database connection manager for SQLite.
+Thread-safe implementation using RLock.
+"""
+
 class DatabaseConnection:
+    """
+    Manages a single SQLite connection throughout the application lifecycle.
+    Uses the Singleton pattern with thread-safe double-checked locking.
+    """
+    
     _instance = None
     # lock
     _lock = RLock()
